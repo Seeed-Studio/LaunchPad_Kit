@@ -9,6 +9,6 @@ This is a Grove library for TI LaunchPad. The example sketch works with [Energia
 
 ###Grove List
 
-*1. Rotary angle sensor. 
-*2. Sound sensor. 
-*3. Light sensor. 
+*1. Rotary angle sensor.   
+*2. Sound sensor.   
+*3. Light sensor.   
