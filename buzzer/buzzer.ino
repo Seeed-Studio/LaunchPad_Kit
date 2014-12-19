@@ -21,9 +21,10 @@
 
 /* Macro Define */
 #define BUZZER_PIN               19            /* sig pin of the buzzer */
+// You may need to place a jumper on P19 depending on your board
 
-int length = 10;         /* the number of notes */
-char notes[] = "ccggaaffeeddc ";
+int length = 15;         /* the number of notes */
+char notes[] = "ccggaagffeeddc ";
 int beats[] = { 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 4 };
 int tempo = 300;
 
@@ -59,8 +60,8 @@ void playTone(int _tone, int duration) {
 
 void playNote(char note, int duration) {
     
-    char name[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b', 'c'};
-    int _tone[] = {1915, 1700, 1519, 1432, 1275, 1136, 1014, 956};
+    char name[] = {'c', 'd', 'e', 'f', 'g', 'a', 'b'};
+    int _tone[] = {1915, 1700, 1519, 1432, 1275, 1136, 1014};
     
     /* play the tone corresponding to the tone name */
     for(int i = 0; i < 8; i++) {
