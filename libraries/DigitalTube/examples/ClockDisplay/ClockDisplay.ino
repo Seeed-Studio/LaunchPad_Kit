@@ -27,7 +27,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include <TimerOne.h>
 #include "TM1637.h"
 #define ON 1
 #define OFF 0
@@ -41,16 +40,15 @@ unsigned char minute = 0;
 unsigned char hour = 12;
 
 
-#define CLK 2//pins definitions for TM1637 and can be changed to other ports
-#define DIO 3
+#define CLK 39 //pins definitions for TM1637 and can be changed to other ports
+#define DIO 38
 TM1637 tm1637(CLK,DIO);
 
 void setup()
 {
   tm1637.set();
   tm1637.init();
-  Timer1.initialize(500000);//timing for 500ms
-  Timer1.attachInterrupt(TimingISR);//declare the interrupt serve routine:TimingISR
+  TimerA0_initialize(500); // timing for 500ms
 }
 void loop()
 {
@@ -61,6 +59,25 @@ void loop()
   }
 
 }
+
+// Configure hardware Timer_A instance 0 to interrupt every <X> milliseconds using the
+// board's 32768Hz crystal
+void TimerA0_initialize(unsigned int ms)
+{
+  unsigned long timer_rollover_value = (ms * 32768) / 1000;
+  
+  // Init Timer_A0
+  TA0CTL = TACLR;
+  TA0CTL = TASSEL__ACLK | ID__1 | MC__STOP;
+  // Configure Count Compare Register 0 - the value at which our timer IRQ will fire (see below)
+  TA0CCR0 = (uint16_t) timer_rollover_value;
+  TA0CCTL0 = CCIE; // Enable CCR0 interrupt
+  
+  TA0CTL |= MC__UP;  // Start the timer!
+}
+
+// Hardware Timer_A instance 0's CCR0 interrupt
+__attribute__((interrupt(TIMER0_A0_VECTOR)))
 void TimingISR()
 {
   halfsecond ++;
@@ -80,9 +97,10 @@ void TimingISR()
     }
     halfsecond = 0;
   }
- // Serial.println(second);
   ClockPoint = (~ClockPoint) & 0x01;
 }
+
+
 void TimeUpdate(void)
 {
   if(ClockPoint)tm1637.point(POINT_ON);
