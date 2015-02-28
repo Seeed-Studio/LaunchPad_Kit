@@ -1,15 +1,12 @@
 /*
-  Light Sensor
- A simple program that display the value of light incident on the grove-light-sensor
- by grove-4-digital-display, this example is definitely similar to grove-rotary-angle-sensor 
+ Grove Light Sensor
+
+ A simple program that display the value of light from the Grove Light Sensor
+ on the Grove 4-Digit Display, this example is very similar to the Grove Rotary Angle Sensor example
  
  The circuit:
- * grove-4-digital-display attached to dio9&dio10 (IIC plug on Grove Base BoosterPack)
- * sig pin of the light sensor to the analog pin
- * one side pin (either one) to ground
- * the other side pin to +5V
- * LED anode (long leg) attached to RED_LED
- * LED cathode (short leg) attached to ground
+ * 4-Digit Display attached to Pin 38 and 39 (J14 plug on Grove Base BoosterPack)
+ * Light Sensor attached to Pin 24 (J6 plug on Grove Base BoosterPack)
  
  * Note:   
  
@@ -17,53 +14,42 @@
  
  This example code is in the public domain.
  
- http://www.seeedstudio.com/depot/Grove-Light-Sensor-p-746.html?cPath=25_27 
- */
+ http://www.seeedstudio.com/depot/Grove-Light-Sensor-p-746.html
+*/
 
+//4-Digit Display library
 #include "TM1637.h" 
 
 /* Macro Define */
-#define CLK               9                  /* 4-digital display clock pin */
-#define DIO               10                 /* 4-digiral display data pin */
-#define BLINK_LED         RED_LED            /* blink led */
-#define LIGHT_SENSOR      A1                 /* pin of grove light sensor */
+#define CLK               39                  /* 4-Digit Display clock pin */
+#define DIO               38                 /* 4-Digit Display data pin */
+#define LIGHT_SENSOR      24                 /* pin connected to the Light Sensor */
 
-/* Global Varibles */
-TM1637 tm1637(CLK, DIO);                  /* 4-digital display object */
-int analog_value = 0;                     /* varible to store the value coming from rotary angle sensor */
-int blink_interval = 0;                   /* led delay time */
-int8_t bits[4] = {0};                     /* array to store the single bits of the value */
+/* Global Variables */
+TM1637 tm1637(CLK, DIO);                  /* 4-Digit Display object */
+int analog_value = 0;                     /* variable to store the value coming from Light Sensor */
+int8_t bits[4] = {0};                     /* array to store the single digits of the value */
 
 /* the setup() method runs once, when the sketch starts */
-void setup() {
-    
-    /* Initialize 4-digital display */
-    tm1637.init();
-    tm1637.set(BRIGHT_TYPICAL);
-  
-    /* declare the red_led pin as an OUTPUT */
-    pinMode(RED_LED, OUTPUT);
-  
+void setup() 
+{
+  /* Initialize 4-Digit Display */
+  tm1637.init();
+  tm1637.set(BRIGHT_TYPICAL);
 }
 
 /* the loop() method runs over and over again */
-void loop() {   
-  
-    analog_value = analogRead(LIGHT_SENSOR);        /* read the value from the sensor */
-    blink_interval = analog_value;                  /* store the light analog value */
-    digitalWrite(BLINK_LED, HIGH);                  /* turn on red led */
-    memset(bits, 0, 4);                             /* reset array when we use it */
-    for(int i = 3; i >= 0; i--) {
-        /* get single bits of the analog value */
-        bits[i] = analog_value % 10;
-        analog_value = analog_value / 10;  
-        tm1637.display(i, bits[i]);                 /* display by 4-digital display */
-    }
-    /*
-      The amount of time the LED will be on and off depends on
-      the value obtained by analogRead().
-    */ 
-    delay(blink_interval);    
-    digitalWrite(BLINK_LED, LOW);
-    delay(blink_interval);
+void loop() 
+{   
+  analog_value = analogRead(LIGHT_SENSOR);        /* read the value from the sensor */
+  	
+  memset(bits, 0, 4);                             /* reset array when we use it */
+  for(int i = 3; i >= 0; i--) 
+  {
+    /* Convert the value to individual decimal digits for display */
+    bits[i] = analog_value % 10;
+    analog_value = analog_value / 10;  
+    tm1637.display(i, bits[i]);                 /* display value on 4-Digit Display */
+  }
+  delay(100);  //small delay so that the number doesn't change too quickly to read
 }
