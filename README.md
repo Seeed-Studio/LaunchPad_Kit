@@ -16,7 +16,7 @@ To use Energia you will need to read the [getting started](https://github.com/en
 * Light sensor. 
 * Buzzer.
 * Relay.
-* 4-Digital Display.
+* 4-Digit Display.
 * PIR Sensor.
 * Moisture Sensor.
 * Ultrasonic Ranger Sensor.
