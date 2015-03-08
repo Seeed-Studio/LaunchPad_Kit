@@ -26,7 +26,7 @@
 #define THRESHOLD_VALUE   	300         /* threshold for watering the plant */
 #define LED 			RED_LED
 
-/* Global Varibles */
+/* Global Variables */
 TM1637 tm1637(CLK, DIO);                  /* 4-Digit Display object */
 int analog_value = 0;                     /* variable to store the value coming from Moisture Sensor */
 int8_t bits[4] = {0};                     /* array to store the single digits of the value */
@@ -38,7 +38,7 @@ void setup()
   tm1637.init();
   tm1637.set(BRIGHT_TYPICAL);
   
-  /* declare the led pin as an OUTPUT */
+  /* declare the LED pin as an OUTPUT */
   pinMode(LED, OUTPUT);  
 }
 
@@ -47,7 +47,7 @@ void loop()
 {
     analog_value = analogRead(MOISTURE_PIN);      /* read the value from the sensor */
   
-    /* if the value is smaller than threshold, turn on led */
+    /* if the value is smaller than threshold, turn on LED */
     if(analog_value < THRESHOLD_VALUE) 
     {
         digitalWrite(LED, HIGH);
@@ -57,7 +57,7 @@ void loop()
         digitalWrite(LED, LOW);
     }
     
-    memset(bits, 0, 4);                             /* reset array when we use it */
+    memset(bits, 0, 4);                             /* reset array before we use it */
     for(int i = 3; i >= 0; i--) 
     {
         /* Convert the value to individual decimal digits for display */

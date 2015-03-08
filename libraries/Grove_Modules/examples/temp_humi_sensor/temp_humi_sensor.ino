@@ -1,16 +1,16 @@
 /*
-  Grove-Temperature-Humidity Sensor
- Read value from grove-temperature-humidity sensor then display on Grove 4-Digit Display
+ Grove Temperature & Humidity Sensor Pro
+ 
+ Read value from Temperature & Humidity sensor then display on 
+ the Grove 4-Digit Display.
  
  The circuit:
- * 4-Digit Display attached to pin9&pin10 (I2C plug on Grove Base BoosterPack)
+ * 4-Digit Display attached to Pin 38 and 39 (J14 plug on Grove Base BoosterPack)
+ * Rotary Angle Sensor attached to Pin 24 (J6 plug on Grove Base BoosterPack)
  * sig pin of the Grove-Temperature-Humidity Sensor to the analog pin A1
- * one side pin (either one) to ground
- * the other side pin to +5V
- * LED anode (long leg) attached to RED_LED
- * LED cathode (short leg) attached to ground
+
  
- * Note: Put your hands on Grove-Temperature-Humidity Sensor, both of the value 
+ * Note: Put your hands on Temperature & Humidity Sensor, both of the values 
          will rise. 
          
          4-Digit Display:
@@ -28,12 +28,12 @@
 #include "DHT.h"
 
 /* Macro Define */
-#define CLK               9                  /* 4-Digit Display clock pin */
-#define DIO               10                 /* 4-Digit Display data pin */
-#define BLINK_LED         RED_LED            /* blink led */
-#define TEMP_HUMI_PIN     A1                 /* pin of temperature&humidity sensor */
+#define CLK               39          /* 4-Digit Display clock pin */
+#define DIO               38          /* 4-Digit Display data pin */
+#define BLINK_LED         RED_LED            /* blink LED */
+#define TEMP_HUMI_PIN     3                 /* pin of temperature&humidity sensor */
 
-/* Global Varibles */
+/* Global Variables */
 TM1637 tm1637(CLK, DIO);                  /* 4-Digit Display object */
 DHT dht(TEMP_HUMI_PIN, DHT22);            /* temperature&humidity sensor object */
 
@@ -49,7 +49,7 @@ void setup()
         
     dht.begin();                         /* initialize temperature humidity sensor */
         
-    pinMode(RED_LED, OUTPUT);            /* declare the red_led pin as an OUTPUT */
+    pinMode(BLINK_LED, OUTPUT);            /* declare the LED pin as an OUTPUT */
 }
 
 /* the loop() method runs over and over again */
@@ -58,8 +58,8 @@ void loop()
     int _temperature = dht.readTemperature();             /* read the temperature value from the sensor */
     int _humidity = dht.readHumidity();                   /* read the humidity value from the sensor */    
              
-    memset(t_bits, 0, 2);                                 /* reset array when we use it */
-    memset(h_bits, 0, 2);
+    memset(t_bits, 0, 2);                                 /* reset array before we use it */
+    memset(h_bits, 0, 2);                                 /* reset array before we use it */
     
     /* 4-Digit Display [0,1] is used to display temperature */
     t_bits[0] = _temperature % 10;

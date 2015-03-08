@@ -1,5 +1,5 @@
 /*
- * A library for the 4 digit display
+ * A library for the Grove 4-Digit Display
  *
  * Copyright (c) 2012 seeed technology inc.
  * Website    : www.seeed.cc

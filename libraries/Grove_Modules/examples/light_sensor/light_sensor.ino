@@ -43,7 +43,7 @@ void loop()
 {   
   analog_value = analogRead(LIGHT_SENSOR);        /* read the value from the sensor */
   	
-  memset(bits, 0, 4);                             /* reset array when we use it */
+  memset(bits, 0, 4);                             /* reset array before we use it */
   for(int i = 3; i >= 0; i--) 
   {
     /* Convert the value to individual decimal digits for display */

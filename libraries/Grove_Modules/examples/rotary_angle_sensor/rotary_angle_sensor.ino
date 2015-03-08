@@ -11,7 +11,7 @@
  * 4-Digit Display attached to Pin 38 and 39 (J14 plug on Grove Base BoosterPack)
  * Rotary Angle Sensor attached to Pin 24 (J6 plug on Grove Base BoosterPack)
  
- * Note: Because of unstable of the voltage, the value of the rotary angle sensor 
+ * Note: Because of changes in voltage, the value of the rotary angle sensor 
          varies slightly from run to run even you don't touch it.  
  
  Created by Oliver Wang
@@ -24,16 +24,16 @@
 #include "TM1637.h" 
 
 /* Macro Define */
-#define CLK               	39          /* 4-Digit Display clock pin */
-#define DIO               	38          /* 4-Digit Display data pin */
-#define LED         RED_LED            /* blink led */
-#define ROTARY_ANGLE_P    24                 /* pin of rotary angle sensor */
+#define CLK               39          /* 4-Digit Display clock pin */
+#define DIO               38          /* 4-Digit Display data pin */
+#define LED               RED_LED     /* blink LED */
+#define ROTARY_ANGLE_P    24          /* pin of rotary angle sensor */
 
-/* Global Varibles */
-TM1637 tm1637(CLK, DIO);                  /* 4-Digit Display object */
-int analog_value = 0;                     /* variable to store the value coming from rotary angle sensor */
-int blink_interval = 0;                   /* LED delay time */
-int8_t bits[4] = {0};                     /* array to store the single bits of the value */
+/* Global Variables */
+TM1637 tm1637(CLK, DIO);              /* 4-Digit Display object */
+int analog_value = 0;                 /* variable to store the value coming from rotary angle sensor */
+int blink_interval = 0;               /* LED delay time */
+int8_t bits[4] = {0};                 /* array to store the single bits of the value */
 
 /* the setup() method runs once, when the sketch starts */
 void setup() 
@@ -51,7 +51,8 @@ void loop()
 {   
     analog_value = analogRead(ROTARY_ANGLE_P);      /* read the value from the sensor */
     blink_interval = analog_value;                  /* store the rotary analog value */
-    digitalWrite(LED, HIGH);                  /* turn on red led */
+    digitalWrite(LED, HIGH);                        /* turn on LED */
+    
     memset(bits, 0, 4);                             /* reset array before we use it */
     for(int i = 3; i >= 0; i--) 
 	{

@@ -1,54 +1,45 @@
 /*
-  Light Sensor
- A simple program demonstrate sound sensor senses a sound that is up to the threshold you set 
- in the code, the LED is on for 1s. 
+ Grove Sound Sensor
+ 
+ A simple program demonstrating sound detection.  When sound is detected over the set threshold,
+ the LED is turned on for 1 second.
  
  The circuit:
- * sig pin of the sound sensor to the analog pin A1 (serial plug on Grove Base BoosterPack)
- * one side pin (either one) to ground
- * the other side pin to +5V
- * LED anode (long leg) attached to RED_LED
- * LED cathode (short leg) attached to ground
+ * Sound Sensor attached to Pin 24 (J6 plug on Grove Base BoosterPack)
  
  * Note:   
  
-
  This example code is in the public domain.
  
  http://www.seeedstudio.com/depot/Grove-Sound-Sensor-p-752.html
  */
  
-#define SOUND_SENSOR       A1           /* sound sensor pin */          
+#define SOUND_SENSOR       24           /* sound sensor pin */          
 #define LED                RED_LED      /* LED pin */
-#define THRESHOLD_VALUE    200          /* The threshold to turn the led on 400.00*5/1024 = 1.95v */
+#define THRESHOLD_VALUE    200          /* The threshold to turn the LED on 200.00*3.3/1024 = 0.65v */
 
-#define ON                 HIGH                    /* led on */
-#define OFF                LOW                     /* led off */
-#define _handle_led(x)     digitalWrite(LED, x)    /* handle led */
-
-/* Global Varibles */
-int sound_value = 0;
+/* Global Variables */
+int sound_value = 0;       /* variable to store the value coming from sound sensor */
 
 void setup() 
 {
-  
-    /* Initialize led pin */
+    /* Initialize LED pin */
     pinMode(LED, OUTPUT);  
     digitalWrite(LED, LOW);
 }
  
 void loop() 
 {
-  
-    /* read the sound value */
-    sound_value = analogRead(SOUND_SENSOR);         
-    /* if the value is larger than threshold, turn on led */
+    /* read the Sound Sensor value */
+    sound_value = analogRead(SOUND_SENSOR); 
+	
+    /* if the sensor value is higher than threshold, turn on LED */
     if(sound_value > THRESHOLD_VALUE) 
-	{
-        _handle_led(ON); 
+    {
+        digitalWrite(LED, HIGH); 
         delay(1000);
     }
-    _handle_led(OFF);
+    digitalWrite(LED, LOW);
 }
 
  

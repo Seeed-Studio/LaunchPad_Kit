@@ -1,7 +1,7 @@
 /*
  Grove PIR Motion Sensor (Passive Infrared)
  
- The following sketch demonstrates a simple application of sensing montion.
+ The following sketch demonstrates a simple application of sensing motion.
  When someone moves in the sensor's detecting range, it will output HIGH through 
  its SIG pin and the LED will turn on. Otherwise, it will output LOW. Then you can 
  use it to detect the motion of people. 
@@ -20,13 +20,13 @@
 
 /* Macro Define */
 #define PIR_MOTION_SENSOR        7            /* sig pin of the PIR sensor */
-#define LED                      RED_LED      /* led */
+#define LED                      RED_LED      /* LED */
 
 /* the setup() method runs once, when the sketch starts */
 void setup() 
 {
     pinMode(PIR_MOTION_SENSOR, INPUT);   /* declare the sig pin as an INPUT */
-    pinMode(RED_LED, OUTPUT);            /* declare the red_led pin as an OUTPUT */
+    pinMode(LED, OUTPUT);            /* declare the LED pin as an OUTPUT */
     digitalWrite(LED, LOW);
 }
 
@@ -35,7 +35,7 @@ void loop()
 {
     if(isMotionDetected()) 
     {
-        digitalWrite(LED, HIGH);           /* if we detect movement, turn on the led */
+        digitalWrite(LED, HIGH);           /* if we detect movement, turn on the LED */
     } 
     else 
     {
