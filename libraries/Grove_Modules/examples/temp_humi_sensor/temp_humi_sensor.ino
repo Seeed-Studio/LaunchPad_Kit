@@ -31,7 +31,7 @@
 #define CLK               39          /* 4-Digit Display clock pin */
 #define DIO               38          /* 4-Digit Display data pin */
 #define BLINK_LED         RED_LED            /* blink LED */
-#define TEMP_HUMI_PIN     3                 /* pin of temperature&humidity sensor */
+#define TEMP_HUMI_PIN     24                 /* pin of temperature&humidity sensor */
 
 /* Global Variables */
 TM1637 tm1637(CLK, DIO);                  /* 4-Digit Display object */

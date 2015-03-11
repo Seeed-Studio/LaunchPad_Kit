@@ -1,10 +1,9 @@
-#ifndef __DHT_H__
-#define __DHT_H__
-#if ARDUINO >= 100
+#ifndef DHT_H
+#define DHT_H
  #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
+#include "Energia.h"
+
+#define ERR 0
 
 /* DHT library 
 
@@ -20,21 +19,20 @@ written by Adafruit Industries
 #define DHT21 21
 #define AM2301 21
 
-class DHT 
-{
-private:
-    uint8_t data[6];
-    uint8_t _pin, _type, _count;
-    boolean read(void);
-    unsigned long _lastreadtime;
-    boolean firstreading;
+class DHT {
+ private:
+  uint8_t data[6];
+  uint8_t _pin, _type;
+  boolean read(void);
+  unsigned long _lastreadtime;
+  boolean firstreading;
 
-public:
-    DHT(uint8_t pin, uint8_t type, uint8_t count=6);
-    void begin(void);
-    float readTemperature(bool S=false);
-    float convertCtoF(float);
-    float readHumidity(void);
+ public:
+  DHT(uint8_t pin, uint8_t type);
+  void begin(void);
+  float readTemperature(bool S=false);
+  float convertCtoF(float);
+  float readHumidity(void);
+
 };
-
 #endif

@@ -5,26 +5,10 @@ written by Adafruit Industries
 */
 
 #include "DHT.h"
-#include "inc/hw_memmap.h"
-#include "inc/hw_types.h"
-#include "inc/hw_ints.h"
-#include "inc/hw_uart.h"
-#include "driverlib/gpio.h"
-#include "driverlib/debug.h"
-#include "driverlib/interrupt.h"
-#include "driverlib/rom.h"
-#include "driverlib/rom_map.h"
-#include "driverlib/prcm.h"
-#include "driverlib/uart.h"
-#include "driverlib/systick.h"
 
-#define cli()                         __set_PRIMASK(1) //NVIC_SETPRIMASK();NVIC_SETFAULTMASK();                                                
-#define sei()                         __set_PRIMASK(0) //NVIC_RESETPRIMASK();NVIC_RESETFAULTMASK();
-
-DHT::DHT(uint8_t pin, uint8_t type, uint8_t count) {
+DHT::DHT(uint8_t pin, uint8_t type) {
   _pin = pin;
   _type = type;
-  _count = count;
   firstreading = true;
 }
 
@@ -62,7 +46,7 @@ float DHT::readTemperature(bool S) {
     }
   }
   Serial.print("Read fail");
-  return -1.0;
+  return 0;
 }
 
 float DHT::convertCtoF(float c) {
@@ -86,7 +70,7 @@ float DHT::readHumidity(void) {
     }
   }
   Serial.print("Read fail");
-  return -1.0;
+  return 0;
 }
 
 
@@ -106,10 +90,14 @@ boolean DHT::read(void) {
     _lastreadtime = 0;
   }
   if (!firstreading && ((currenttime - _lastreadtime) < 2000)) {
-    return true; // return last correct measurement    
+    return true; // return last correct measurement
+    //delay(2000 - (currenttime - _lastreadtime));
   }
   firstreading = false;
-
+  /*
+    Serial.print("Currtime: "); Serial.print(currenttime);
+    Serial.print(" Lasttime: "); Serial.print(_lastreadtime);
+  */
   _lastreadtime = millis();
 
   data[0] = data[1] = data[2] = data[3] = data[4] = 0;
@@ -118,7 +106,7 @@ boolean DHT::read(void) {
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, LOW);
   delay(20);
-  cli();
+  noInterrupts();
   digitalWrite(_pin, HIGH);
   delayMicroseconds(40);
   pinMode(_pin, INPUT);
@@ -128,7 +116,7 @@ boolean DHT::read(void) {
     counter = 0;
     while (digitalRead(_pin) == laststate) {
       counter++;
-      delayMicroseconds(1);
+      delayMicroseconds(3);
       if (counter == 255) {
         break;
       }
@@ -141,20 +129,32 @@ boolean DHT::read(void) {
     if ((i >= 4) && (i%2 == 0)) {
       // shove each bit into the storage bytes
       data[j/8] <<= 1;
-      if (counter > _count)
+      if (counter > 6)
         data[j/8] |= 1;
       j++;
     }
 
   }
 
-  sei();
+ interrupts();
   
+  /*
+  Serial.println(j, DEC);
+  Serial.print(data[0], HEX); Serial.print(", ");
+  Serial.print(data[1], HEX); Serial.print(", ");
+  Serial.print(data[2], HEX); Serial.print(", ");
+  Serial.print(data[3], HEX); Serial.print(", ");
+  Serial.print(data[4], HEX); Serial.print(" =? ");
+  Serial.println(data[0] + data[1] + data[2] + data[3], HEX);
+  */
+
   // check we read 40 bits and that the checksum matches
   if ((j >= 40) && 
       (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) ) {
     return true;
   }
   
+
   return false;
+
 }
