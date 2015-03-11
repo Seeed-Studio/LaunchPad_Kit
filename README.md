@@ -11,29 +11,29 @@ To use Energia you will need to read the [getting started](https://github.com/en
 
 ###Grove Part Lists
 
-* Rotary angle sensor.   
-* Sound sensor.   
-* Light sensor. 
-* Buzzer.
-* Relay.
-* 4-Digit Display.
-* PIR Sensor.
-* Moisture Sensor.
-* Ultrasonic Ranger Sensor.
-* Temperature Humidity Sensor Pro.
+* Rotary angle sensor   
+* Sound sensor   
+* Light sensor 
+* Buzzer
+* Relay
+* 4-Digit Display
+* PIR Sensor
+* Moisture Sensor
+* Ultrasonic Ranger Sensor
+* Temperature Humidity Sensor Pro
 
-###Example
+###Examples
 
 * Playing Music – (Buzzer)
-* Control the Electric – (Relays)
-* Display– (4-Digital Display)
+* Control Electricity – (Relay)
+* Display – (4-Digit Display)
 * Potentiometer – (Rotary Angle Sensor)
-* Sensing the Light – (Light Sensor)
+* Sensing Light – (Light Sensor)
 * Hearing – (Sound Sensor)
-* Is anybody there– (PIR Sensor)
-* Taking care of your plants– (Moisture Sensor)
-* Sensing the Distance – (Ultrasonic Ranger Sensor)
-* Feeling the Environments – (Temperature Humidity Sensor)
+* Is anybody there – (PIR Sensor)
+* Taking care of your plants – (Moisture Sensor)
+* Sensing Distance – (Ultrasonic Ranger Sensor)
+* Feeling the Environment – (Temperature Humidity Sensor)
 
 
 ###How do I get set up?

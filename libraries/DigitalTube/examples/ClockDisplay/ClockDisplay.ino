@@ -1,7 +1,8 @@
 /*
- * A library for the Grove 4-Digit Display
+ * Clock Display
+ * An example sketch for the Grove 4-Digit Display
  *
- * Copyright (c) 2012 seeed technology inc.
+ * Copyright (c) 2012 Seeed technology, Inc.
  * Website    : www.seeed.cc
  * Author     : Frankie.Chu
  * Create Time: 9 April,2012
