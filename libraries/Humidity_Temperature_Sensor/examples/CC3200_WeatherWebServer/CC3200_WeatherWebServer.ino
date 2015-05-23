@@ -102,12 +102,12 @@ DHT myDHT(24, DHT22);            /* temperature&humidity sensor object */
 ///
 /// @brief	SSID = network name
 ///
-char ssid[] = "taximouette";
+char ssid[] = "SSID";
 
 ///
 /// @brief	Network password
 ///
-char password[] = "soleilpluievent";
+char password[] = "password";
 
 ///
 /// @brief	Finite State Machine for requests
